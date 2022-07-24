@@ -30,10 +30,9 @@ get_orm_instance(app)
 def list_item_all():
     query = deserialize_query_string(request.query_string)
 
-    validator = validator_factory({
-        'page': [data_type.STRING, True],
-        'per_page': [data_type.STRING, True]
-    })
+    validator = validator_factory(
+        {"page": [data_type.STRING, True], "per_page": [data_type.STRING, True]}
+    )
 
     try:
         validator.validate(query)
@@ -53,12 +52,14 @@ def list_item_by_id(id):
     except error.EntityNotFoundError as e:
         return handle_http_exception(e, http.NOT_FOUND)
 
+
 @app.route("/api/list_item", methods={"POST"})
 def create_list_item():
     if not ensure_json(request):
-        return jsonify({
-            "message": "Content type must be 'application/json'."
-        }), http.UNSUPPORTED_MEDIA_TYPE
+        return (
+            jsonify({"message": "Content type must be 'application/json'."}),
+            http.UNSUPPORTED_MEDIA_TYPE,
+        )
 
     req = http.json(request)
 
@@ -90,13 +91,19 @@ def create_list_item():
     db.session.add(list_item)
     db.session.commit()
 
-    return jsonify(normalize_entity(list_item, ListItem.get_serialization_attribute())), http.CREATED
+    return (
+        jsonify(normalize_entity(list_item, ListItem.get_serialization_attribute())),
+        http.CREATED,
+    )
 
 
 @app.route("/api/list_item/<id>", methods={"PUT"})
 def patch_list_item(id):
     if not ensure_json(request):
-        return jsonify({"message": "Content type must be 'application/json'."}), http.UNSUPPORTED_MEDIA_TYPE
+        return (
+            jsonify({"message": "Content type must be 'application/json'."}),
+            http.UNSUPPORTED_MEDIA_TYPE,
+        )
 
     list_item = ListItem.query.filter(ListItem.id == id).first()
 
@@ -136,7 +143,10 @@ def patch_list_item(id):
     db.session.flush()
     db.session.commit()
 
-    return jsonify(normalize_entity(list_item, ListItem.get_serialization_attribute())), http.OK
+    return (
+        jsonify(normalize_entity(list_item, ListItem.get_serialization_attribute())),
+        http.OK,
+    )
 
 
 @app.route("/api/list_item/<id>", methods={"DELETE"})

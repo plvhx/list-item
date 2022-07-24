@@ -29,6 +29,7 @@ def _normalize_single_entity(data, keys):
 
     return result
 
+
 def normalize_entity(data, keys):
     data = data if isinstance(data, list) else [data]
     result = []
@@ -38,31 +39,27 @@ def normalize_entity(data, keys):
 
     return result
 
+
 def paginate_multiple(result, page=_default_page, per_page=_default_per_page):
     paginated = result.query.paginate(page, per_page)
     results = normalize_entity(paginated.items)
 
-    return (
-        pagination_metadata(
-            results,
-            1 if page == 1 else page - 1,
-            page,
-            per_page,
-            math.floor(paginated.total / per_page),
-            paginated.total,
-        )
+    return pagination_metadata(
+        results,
+        1 if page == 1 else page - 1,
+        page,
+        per_page,
+        math.floor(paginated.total / per_page),
+        paginated.total,
     )
 
 
-def paginate_single(
-    result, id, page=_default_page, per_page=_default_per_page
-):
+def paginate_single(result, id, page=_default_page, per_page=_default_per_page):
     data = result.query.get(id)
 
     if data == None:
         raise error.EntityNotFoundError(
-            'Data from entity \'%s\' with id \'%s\' not found.'
-            % (result.__name__, id)
+            "Data from entity '%s' with id '%s' not found." % (result.__name__, id)
         )
 
     return pagination_metadata(normalize_entity(data), 1, 1, 1, 1, 1)

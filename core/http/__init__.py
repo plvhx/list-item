@@ -96,6 +96,7 @@ def handle_http_exception(e, code=BAD_REQUEST):
 def ensure_json(req):
     return True if req.content_type == "application/json" else False
 
+
 def json(req):
     try:
         return req.json

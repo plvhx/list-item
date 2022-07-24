@@ -13,5 +13,6 @@ class InvalidArgumentError(Exception):
 class LogicError(Exception):
     pass
 
+
 class EntityNotFoundError(Exception):
     pass

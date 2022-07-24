@@ -22,8 +22,18 @@ class ListItem(base.db.Model):
     @staticmethod
     def get_serialization_attribute():
         return [
-            'id', 'thumbnail', 'title', 'attachment_id',
-            'cond', 'file', 'ind', 'name',
-            'thumbnail_size', 'amount', 'cate', 'subcate',
-            'price', 'tags'
+            "id",
+            "thumbnail",
+            "title",
+            "attachment_id",
+            "cond",
+            "file",
+            "ind",
+            "name",
+            "thumbnail_size",
+            "amount",
+            "cate",
+            "subcate",
+            "price",
+            "tags",
         ]
