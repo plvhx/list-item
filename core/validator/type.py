@@ -1,0 +1,5 @@
+BOOL = 1 << 0
+STRING = 1 << 1
+INTEGER = 1 << 2
+FLOAT = 1 << 3
+UNDEFINED = 1 << 32
