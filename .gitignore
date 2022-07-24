@@ -1,0 +1,10 @@
+.env
+venv/
+__pycache__/
+core/__pycache__/
+core/config/__pycache__/
+core/error/__pycache__/
+core/http/__pycache__/
+core/model/__pycache__/
+core/util/__pycache__/
+core/validator/__pycache__/
