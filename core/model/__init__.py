@@ -42,7 +42,7 @@ def normalize_entity(data, keys):
 
 def paginate_multiple(result, page=_default_page, per_page=_default_per_page):
     paginated = result.query.paginate(page, per_page)
-    results = normalize_entity(paginated.items)
+    results = normalize_entity(paginated.items, result.get_serialization_attribute())
 
     return pagination_metadata(
         results,
@@ -62,7 +62,9 @@ def paginate_single(result, id, page=_default_page, per_page=_default_per_page):
             "Data from entity '%s' with id '%s' not found." % (result.__name__, id)
         )
 
-    return pagination_metadata(normalize_entity(data), 1, 1, 1, 1, 1)
+    return pagination_metadata(
+        normalize_entity(data, result.get_serialization_attribute()), 1, 1, 1, 1, 1
+    )
 
 
 def deserialize_entity(entity, maps):
